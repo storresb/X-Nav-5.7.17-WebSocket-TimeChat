@@ -38,7 +38,10 @@ class SimpleChat(WebSocket):
             self.data = ''
 
         for client in self.server.connections.itervalues():
-            if client != self:
+            if self.data != "getTime":
+                currentTime = time.strftime("%c")
+                client.sendMessage("Fecha y hora actual: " + currentTime)
+            else:
                 try:
                     client.sendMessage(str(self.address[0]) + ' - ' + str(self.data))
                 except Exception as n:
